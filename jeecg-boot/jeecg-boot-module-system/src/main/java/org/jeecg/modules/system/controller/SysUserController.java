@@ -43,11 +43,12 @@ import org.jeecgframework.poi.excel.entity.ExportParams;
 import org.jeecgframework.poi.excel.entity.ImportParams;
 import org.jeecgframework.poi.excel.view.JeecgEntityExcelView;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -97,7 +98,7 @@ public class SysUserController {
 	@Autowired
 	private RedisUtil redisUtil;
 	
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	@GetMapping(value = "/list")
 	public Result<IPage<SysUser>> queryPageList(SysUser user,@RequestParam(name="pageNo", defaultValue="1") Integer pageNo,
 									  @RequestParam(name="pageSize", defaultValue="10") Integer pageSize,HttpServletRequest req) {
 		Result<IPage<SysUser>> result = new Result<IPage<SysUser>>();
@@ -109,7 +110,7 @@ public class SysUserController {
 		return result;
 	}
 
-	@RequestMapping(value = "/add", method = RequestMethod.POST)
+	@PostMapping(value = "/add")
 	@RequiresPermissions("user:add")
 	public Result<SysUser> add(@RequestBody JSONObject jsonObject) {
 		Result<SysUser> result = new Result<SysUser>();
@@ -134,7 +135,7 @@ public class SysUserController {
 		return result;
 	}
 
-	@RequestMapping(value = "/edit", method = RequestMethod.PUT)
+	@PutMapping(value = "/edit")
 	//@RequiresPermissions("user:edit")
 	public Result<SysUser> edit(@RequestBody JSONObject jsonObject) {
 		Result<SysUser> result = new Result<SysUser>();
@@ -164,7 +165,7 @@ public class SysUserController {
 	/**
 	 * 删除用户
 	 */
-	@RequestMapping(value = "/delete", method = RequestMethod.DELETE)
+	@DeleteMapping(value = "/delete")
 	public Result<SysUser> delete(@RequestParam(name="id",required=true) String id) {
 		Result<SysUser> result = new Result<SysUser>();
 		// 定义SysUserDepart实体类的数据库查询LambdaQueryWrapper
@@ -189,7 +190,7 @@ public class SysUserController {
 	/**
 	 * 批量删除用户
 	 */
-	@RequestMapping(value = "/deleteBatch", method = RequestMethod.DELETE)
+	@DeleteMapping(value = "/deleteBatch")
 	public Result<SysUser> deleteBatch(@RequestParam(name="ids",required=true) String ids) {
 		// 定义SysUserDepart实体类的数据库查询对象LambdaQueryWrapper
 		LambdaQueryWrapper<SysUserDepart> query = new LambdaQueryWrapper<SysUserDepart>();
@@ -215,7 +216,7 @@ public class SysUserController {
 	 * @param jsonObject
 	 * @return
 	 */
-	@RequestMapping(value = "/frozenBatch", method = RequestMethod.PUT)
+	@PutMapping(value = "/frozenBatch")
 	public Result<SysUser> frozenBatch(@RequestBody JSONObject jsonObject) {
 		Result<SysUser> result = new Result<SysUser>();
 		try {
@@ -237,7 +238,7 @@ public class SysUserController {
 
     }
 
-    @RequestMapping(value = "/queryById", method = RequestMethod.GET)
+    @GetMapping(value = "/queryById")
     public Result<SysUser> queryById(@RequestParam(name = "id", required = true) String id) {
         Result<SysUser> result = new Result<SysUser>();
         SysUser sysUser = sysUserService.getById(id);
@@ -250,7 +251,7 @@ public class SysUserController {
         return result;
     }
 
-    @RequestMapping(value = "/queryUserRole", method = RequestMethod.GET)
+    @GetMapping(value = "/queryUserRole")
     public Result<List<String>> queryUserRole(@RequestParam(name = "userid", required = true) String userid) {
         Result<List<String>> result = new Result<>();
         List<String> list = new ArrayList<String>();
@@ -275,7 +276,7 @@ public class SysUserController {
      * @param sysUser
      * @return
      */
-    @RequestMapping(value = "/checkOnlyUser", method = RequestMethod.GET)
+    @GetMapping(value = "/checkOnlyUser")
     public Result<Boolean> checkOnlyUser(SysUser sysUser) {
         Result<Boolean> result = new Result<>();
         //如果此参数为false则程序发生异常
@@ -301,7 +302,7 @@ public class SysUserController {
     /**
      * 修改密码
      */
-    @RequestMapping(value = "/changPassword", method = RequestMethod.PUT)
+    @PutMapping(value = "/changPassword")
     public Result<SysUser> changPassword(@RequestBody SysUser sysUser) {
         Result<SysUser> result = new Result<SysUser>();
         String password = sysUser.getPassword();
@@ -326,7 +327,7 @@ public class SysUserController {
      * @param userId
      * @return
      */
-    @RequestMapping(value = "/userDepartList", method = RequestMethod.GET)
+    @GetMapping(value = "/userDepartList")
     public Result<List<DepartIdModel>> getUserDepartsList(@RequestParam(name = "userId", required = true) String userId) {
         Result<List<DepartIdModel>> result = new Result<>();
         try {
@@ -354,7 +355,7 @@ public class SysUserController {
      *
      * @return
      */
-    @RequestMapping(value = "/generateUserId", method = RequestMethod.GET)
+    @GetMapping(value = "/generateUserId")
     public Result<String> generateUserId() {
         Result<String> result = new Result<>();
         System.out.println("我执行了,生成用户ID==============================");
@@ -370,7 +371,7 @@ public class SysUserController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/queryUserByDepId", method = RequestMethod.GET)
+    @GetMapping(value = "/queryUserByDepId")
     public Result<List<SysUser>> queryUserByDepId(@RequestParam(name = "id", required = true) String id) {
         Result<List<SysUser>> result = new Result<>();
         List<SysUser> userList = sysUserDepartService.queryUserByDepId(id);
@@ -390,7 +391,7 @@ public class SysUserController {
      *
      * @return
      */
-    @RequestMapping(value = "/queryUserRoleMap", method = RequestMethod.GET)
+    @GetMapping(value = "/queryUserRoleMap")
     public Result<Map<String, String>> queryUserRole() {
         Result<Map<String, String>> result = new Result<>();
         Map<String, String> map = userRoleService.queryUserRole();
@@ -429,7 +430,7 @@ public class SysUserController {
      * @return
      */
     @RequiresPermissions("user:import")
-    @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
+    @PostMapping(value = "/importExcel")
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
         Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
@@ -468,7 +469,7 @@ public class SysUserController {
 	 * @param userIds
 	 * @return
 	 */
-	@RequestMapping(value = "/queryByIds", method = RequestMethod.GET)
+	@GetMapping(value = "/queryByIds")
 	public Result<Collection<SysUser>> queryByIds(@RequestParam String userIds) {
 		Result<Collection<SysUser>> result = new Result<>();
 		String[] userId = userIds.split(",");
@@ -482,7 +483,7 @@ public class SysUserController {
 	/**
 	 * 首页密码修改
 	 */
-	@RequestMapping(value = "/updatePassword", method = RequestMethod.PUT)
+	@PutMapping(value = "/updatePassword")
 	public Result<SysUser> changPassword(@RequestBody JSONObject json) {
 		Result<SysUser> result = new Result<SysUser>();
 		String username = json.getString("username");
@@ -515,7 +516,7 @@ public class SysUserController {
 		return result;
 	}
 
-    @RequestMapping(value = "/userRoleList", method = RequestMethod.GET)
+    @GetMapping(value = "/userRoleList")
     public Result<IPage<SysUser>> userRoleList(@RequestParam(name="pageNo", defaultValue="1") Integer pageNo,
                                                @RequestParam(name="pageSize", defaultValue="10") Integer pageSize, HttpServletRequest req) {
         Result<IPage<SysUser>> result = new Result<IPage<SysUser>>();
@@ -534,7 +535,7 @@ public class SysUserController {
      * @param
      * @return
      */
-    @RequestMapping(value = "/addSysUserRole", method = RequestMethod.POST)
+    @PostMapping(value = "/addSysUserRole")
     public Result<String> addSysUserRole(@RequestBody SysUserRoleVO sysUserRoleVO) {
         Result<String> result = new Result<String>();
         try {
@@ -564,7 +565,7 @@ public class SysUserController {
      * @param
      * @return
      */
-    @RequestMapping(value = "/deleteUserRole", method = RequestMethod.DELETE)
+    @DeleteMapping(value = "/deleteUserRole")
     public Result<SysUserRole> deleteUserRole(@RequestParam(name="roleId") String roleId,
                                                     @RequestParam(name="userId",required=true) String userId
     ) {
@@ -587,7 +588,7 @@ public class SysUserController {
      * @param
      * @return
      */
-    @RequestMapping(value = "/deleteUserRoleBatch", method = RequestMethod.DELETE)
+    @DeleteMapping(value = "/deleteUserRoleBatch")
     public Result<SysUserRole> deleteUserRoleBatch(
             @RequestParam(name="roleId") String roleId,
             @RequestParam(name="userIds",required=true) String userIds) {
@@ -607,7 +608,7 @@ public class SysUserController {
     /**
      * 部门用户列表
      */
-    @RequestMapping(value = "/departUserList", method = RequestMethod.GET)
+    @GetMapping(value = "/departUserList")
     public Result<IPage<SysUser>> departUserList(@RequestParam(name="pageNo", defaultValue="1") Integer pageNo,
                                                  @RequestParam(name="pageSize", defaultValue="10") Integer pageSize, HttpServletRequest req) {
         Result<IPage<SysUser>> result = new Result<IPage<SysUser>>();
@@ -623,7 +624,7 @@ public class SysUserController {
     /**
      * 给指定部门添加对应的用户
      */
-    @RequestMapping(value = "/editSysDepartWithUser", method = RequestMethod.POST)
+    @PostMapping(value = "/editSysDepartWithUser")
     public Result<String> editSysDepartWithUser(@RequestBody SysDepartUsersVO sysDepartUsersVO) {
         Result<String> result = new Result<String>();
         try {
@@ -651,7 +652,7 @@ public class SysUserController {
     /**
      *   删除指定机构的用户关系
      */
-    @RequestMapping(value = "/deleteUserInDepart", method = RequestMethod.DELETE)
+    @DeleteMapping(value = "/deleteUserInDepart")
     public Result<SysUserDepart> deleteUserInDepart(@RequestParam(name="depId") String depId,
                                                     @RequestParam(name="userId",required=true) String userId
     ) {
@@ -671,7 +672,7 @@ public class SysUserController {
     /**
      * 批量删除指定机构的用户关系
      */
-    @RequestMapping(value = "/deleteUserInDepartBatch", method = RequestMethod.DELETE)
+    @DeleteMapping(value = "/deleteUserInDepartBatch")
     public Result<SysUserDepart> deleteUserInDepartBatch(
             @RequestParam(name="depId") String depId,
             @RequestParam(name="userIds",required=true) String userIds) {
@@ -692,7 +693,7 @@ public class SysUserController {
          *  查询当前用户的所有部门/当前部门编码
      * @return
      */
-    @RequestMapping(value = "/getCurrentUserDeparts", method = RequestMethod.GET)
+    @GetMapping(value = "/getCurrentUserDeparts")
     public Result<Map<String,Object>> getCurrentUserDeparts() {
         Result<Map<String,Object>> result = new Result<Map<String,Object>>();
         try {

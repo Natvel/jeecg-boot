@@ -28,9 +28,9 @@ import org.jeecg.modules.system.service.ISysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSONObject;
@@ -61,7 +61,7 @@ public class LoginController {
 	@Autowired
     private ISysDepartService sysDepartService;
 
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	@PostMapping(value = "/login")
 	@ApiOperation("登录接口")
 	public Result<JSONObject> login(@RequestBody SysLoginModel sysLoginModel) throws Exception {
 		Result<JSONObject> result = new Result<JSONObject>();
@@ -173,7 +173,7 @@ public class LoginController {
 	 * @param user
 	 * @return
 	 */
-	@RequestMapping(value = "/selectDepart", method = RequestMethod.PUT)
+	@PutMapping(value = "/selectDepart")
 	public Result<?> selectDepart(@RequestBody SysUser user) {
 		String username = user.getUsername();
 		if(oConvertUtils.isEmpty(username)) {

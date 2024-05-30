@@ -13,9 +13,9 @@ import org.jeecg.common.system.vo.LoginUser;
 import org.jeecg.modules.ngalain.service.NgAlainService;
 import org.jeecg.modules.system.service.ISysDictService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -52,7 +52,7 @@ public class NgAlainController {
         return j;
     }
 
-    @RequestMapping(value = "/getDictItems/{dictCode}", method = RequestMethod.GET)
+    @GetMapping(value = "/getDictItems/{dictCode}")
     public Object getDictItems(@PathVariable String dictCode) {
         log.info(" dictCode : "+ dictCode);
         Result<List<DictModel>> result = new Result<List<DictModel>>();
@@ -79,7 +79,7 @@ public class NgAlainController {
         }
         return dictlist;
     }
-    @RequestMapping(value = "/getDictItemsByTable/{table}/{key}/{value}", method = RequestMethod.GET)
+    @GetMapping(value = "/getDictItemsByTable/{table}/{key}/{value}")
     public Object getDictItemsByTable(@PathVariable String table,@PathVariable String key,@PathVariable String value) {
         return this.ngAlainService.getDictByTable(table,key,value);
     }

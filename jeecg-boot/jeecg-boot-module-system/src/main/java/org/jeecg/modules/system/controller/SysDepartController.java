@@ -29,9 +29,12 @@ import org.jeecgframework.poi.excel.entity.ExportParams;
 import org.jeecgframework.poi.excel.entity.ImportParams;
 import org.jeecgframework.poi.excel.view.JeecgEntityExcelView;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -66,7 +69,7 @@ public class SysDepartController {
 	 * 
 	 * @return
 	 */
-	@RequestMapping(value = "/queryTreeList", method = RequestMethod.GET)
+	@GetMapping(value = "/queryTreeList")
 	public Result<List<SysDepartTreeModel>> queryTreeList() {
 		Result<List<SysDepartTreeModel>> result = new Result<>();
 		try {
@@ -85,7 +88,7 @@ public class SysDepartController {
 	 * @param sysDepart
 	 * @return
 	 */
-	@RequestMapping(value = "/add", method = RequestMethod.POST)
+	@PostMapping(value = "/add")
 	public Result<SysDepart> add(@RequestBody SysDepart sysDepart, HttpServletRequest request) {
 		Result<SysDepart> result = new Result<SysDepart>();
 		String username = JwtUtil.getUserNameByToken(request);
@@ -106,7 +109,7 @@ public class SysDepartController {
 	 * @param sysDepart
 	 * @return
 	 */
-	@RequestMapping(value = "/edit", method = RequestMethod.PUT)
+	@PutMapping(value = "/edit")
 	public Result<SysDepart> edit(@RequestBody SysDepart sysDepart, HttpServletRequest request) {
 		String username = JwtUtil.getUserNameByToken(request);
 		sysDepart.setUpdateBy(username);
@@ -129,7 +132,7 @@ public class SysDepartController {
     * @param id
     * @return
     */
-   @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
+   @DeleteMapping(value = "/delete")
    public Result<SysDepart> delete(@RequestParam(name="id",required=true) String id) {
 
        Result<SysDepart> result = new Result<SysDepart>();
@@ -152,7 +155,7 @@ public class SysDepartController {
 	 * @param ids
 	 * @return
 	 */
-	@RequestMapping(value = "/deleteBatch", method = RequestMethod.DELETE)
+	@DeleteMapping(value = "/deleteBatch")
 	public Result<SysDepart> deleteBatch(@RequestParam(name = "ids", required = true) String ids) {
 
 		Result<SysDepart> result = new Result<SysDepart>();
@@ -170,7 +173,7 @@ public class SysDepartController {
 	 * 
 	 * @return
 	 */
-	@RequestMapping(value = "/queryIdTree", method = RequestMethod.GET)
+	@GetMapping(value = "/queryIdTree")
 	public Result<List<DepartIdModel>> queryIdTree() {
 		Result<List<DepartIdModel>> result = new Result<List<DepartIdModel>>();
 		List<DepartIdModel> idList;
@@ -201,7 +204,7 @@ public class SysDepartController {
 	 * @param keyWord
 	 * @return
 	 */
-	@RequestMapping(value = "/searchBy", method = RequestMethod.GET)
+	@GetMapping(value = "/searchBy")
 	public Result<List<SysDepartTreeModel>> searchBy(@RequestParam(name = "keyWord", required = true) String keyWord) {
 		Result<List<SysDepartTreeModel>> result = new Result<List<SysDepartTreeModel>>();
 		try {
@@ -257,7 +260,7 @@ public class SysDepartController {
      * @param response
      * @return
      */
-    @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
+    @PostMapping(value = "/importExcel")
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
         Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();

@@ -7,8 +7,8 @@ import org.jeecg.common.api.vo.Result;
 import org.jeecg.modules.system.mapper.SysDictMapper;
 import org.jeecg.modules.system.model.DuplicateCheckVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
@@ -36,7 +36,7 @@ public class DuplicateCheckController {
 	 * 
 	 * @return
 	 */
-	@RequestMapping(value = "/check", method = RequestMethod.GET)
+	@GetMapping(value = "/check")
 	@ApiOperation("重复校验接口")
 	public Result<Object> doDuplicateCheck(DuplicateCheckVo duplicateCheckVo, HttpServletRequest request) {
 		Long num = null;

@@ -34,12 +34,13 @@ import org.jeecgframework.poi.excel.entity.ImportParams;
 import org.jeecgframework.poi.excel.view.JeecgEntityExcelView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -87,7 +88,7 @@ public class SysRoleController {
 	 * @param req
 	 * @return
 	 */
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	@GetMapping(value = "/list")
 	public Result<IPage<SysRole>> queryPageList(SysRole role,
 									  @RequestParam(name="pageNo", defaultValue="1") Integer pageNo,
 									  @RequestParam(name="pageSize", defaultValue="10") Integer pageSize,
@@ -106,7 +107,7 @@ public class SysRoleController {
 	 * @param role
 	 * @return
 	 */
-	@RequestMapping(value = "/add", method = RequestMethod.POST)
+	@PostMapping(value = "/add")
 	public Result<SysRole> add(@RequestBody SysRole role) {
 		Result<SysRole> result = new Result<SysRole>();
 		try {
@@ -125,7 +126,7 @@ public class SysRoleController {
 	 * @param role
 	 * @return
 	 */
-	@RequestMapping(value = "/edit", method = RequestMethod.PUT)
+	@PutMapping(value = "/edit")
 	public Result<SysRole> edit(@RequestBody SysRole role) {
 		Result<SysRole> result = new Result<SysRole>();
 		SysRole sysrole = sysRoleService.getById(role.getId());
@@ -149,7 +150,7 @@ public class SysRoleController {
 	 * @return
 	 */
 	@CacheEvict(value= CacheConstant.LOGIN_USER_RULES_CACHE, allEntries=true)
-	@RequestMapping(value = "/delete", method = RequestMethod.DELETE)
+	@DeleteMapping(value = "/delete")
 	public Result<SysRole> delete(@RequestParam(name="id",required=true) String id) {
 		Result<SysRole> result = new Result<SysRole>();
 		SysRole sysrole = sysRoleService.getById(id);
@@ -171,7 +172,7 @@ public class SysRoleController {
 	 * @return
 	 */
 	@CacheEvict(value=CacheConstant.LOGIN_USER_RULES_CACHE, allEntries=true)
-	@RequestMapping(value = "/deleteBatch", method = RequestMethod.DELETE)
+	@DeleteMapping(value = "/deleteBatch")
 	public Result<SysRole> deleteBatch(@RequestParam(name="ids",required=true) String ids) {
 		Result<SysRole> result = new Result<SysRole>();
 		if(ids==null || "".equals(ids.trim())) {
@@ -188,7 +189,7 @@ public class SysRoleController {
 	 * @param id
 	 * @return
 	 */
-	@RequestMapping(value = "/queryById", method = RequestMethod.GET)
+	@GetMapping(value = "/queryById")
 	public Result<SysRole> queryById(@RequestParam(name="id",required=true) String id) {
 		Result<SysRole> result = new Result<SysRole>();
 		SysRole sysrole = sysRoleService.getById(id);
@@ -201,7 +202,7 @@ public class SysRoleController {
 		return result;
 	}
 	
-	@RequestMapping(value = "/queryall", method = RequestMethod.GET)
+	@GetMapping(value = "/queryall")
 	public Result<List<SysRole>> queryall() {
 		Result<List<SysRole>> result = new Result<>();
 		List<SysRole> list = sysRoleService.list();
@@ -217,7 +218,7 @@ public class SysRoleController {
 	/**
 	  * 校验角色编码唯一
 	 */
-	@RequestMapping(value = "/checkRoleCode", method = RequestMethod.GET)
+	@GetMapping(value = "/checkRoleCode")
 	public Result<Boolean> checkUsername(String id,String roleCode) {
 		Result<Boolean> result = new Result<>();
 		result.setResult(true);//如果此参数为false则程序发生异常
@@ -279,7 +280,7 @@ public class SysRoleController {
 	 * @param response
 	 * @return
 	 */
-	@RequestMapping(value = "/importExcel", method = RequestMethod.POST)
+	@PostMapping(value = "/importExcel")
 	public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 		Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
@@ -370,7 +371,7 @@ public class SysRoleController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = "/queryTreeList", method = RequestMethod.GET)
+	@GetMapping(value = "/queryTreeList")
 	public Result<Map<String,Object>> queryTreeList(HttpServletRequest request) {
 		Result<Map<String,Object>> result = new Result<>();
 		//全部权限ids

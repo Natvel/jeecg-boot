@@ -25,6 +25,9 @@ import org.jeecg.modules.system.service.ISysRolePermissionService;
 import org.jeecg.modules.system.util.PermissionDataUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -65,7 +68,7 @@ public class SysPermissionController {
 	 * 
 	 * @return
 	 */
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	@GetMapping(value = "/list")
 	public Result<List<SysPermissionTree>> list() {
 		Result<List<SysPermissionTree>> result = new Result<>();
 		try {
@@ -110,7 +113,7 @@ public class SysPermissionController {
 	 * 
 	 * @return
 	 */
-	@RequestMapping(value = "/getUserPermissionByToken", method = RequestMethod.GET)
+	@GetMapping(value = "/getUserPermissionByToken")
 	public Result<?> getUserPermissionByToken(@RequestParam(name = "token", required = true) String token) {
 		Result<JSONObject> result = new Result<JSONObject>();
 		try {
@@ -152,7 +155,7 @@ public class SysPermissionController {
 	 * @return
 	 */
 	@RequiresRoles({ "admin" })
-	@RequestMapping(value = "/add", method = RequestMethod.POST)
+	@PostMapping(value = "/add")
 	public Result<SysPermission> add(@RequestBody SysPermission permission) {
 		Result<SysPermission> result = new Result<SysPermission>();
 		try {
@@ -194,7 +197,7 @@ public class SysPermissionController {
 	 */
 	@RequiresRoles({ "admin" })
 	@CacheEvict(value=CacheConstant.LOGIN_USER_RULES_CACHE, allEntries=true)
-	@RequestMapping(value = "/delete", method = RequestMethod.DELETE)
+	@DeleteMapping(value = "/delete")
 	public Result<SysPermission> delete(@RequestParam(name = "id", required = true) String id) {
 		Result<SysPermission> result = new Result<>();
 		try {
@@ -215,7 +218,7 @@ public class SysPermissionController {
 	 */
 	@RequiresRoles({ "admin" })
 	@CacheEvict(value=CacheConstant.LOGIN_USER_RULES_CACHE, allEntries=true)
-	@RequestMapping(value = "/deleteBatch", method = RequestMethod.DELETE)
+	@DeleteMapping(value = "/deleteBatch")
 	public Result<SysPermission> deleteBatch(@RequestParam(name = "ids", required = true) String ids) {
 		Result<SysPermission> result = new Result<>();
 		try {
@@ -238,7 +241,7 @@ public class SysPermissionController {
 	 * 
 	 * @return
 	 */
-	@RequestMapping(value = "/queryTreeList", method = RequestMethod.GET)
+	@GetMapping(value = "/queryTreeList")
 	public Result<Map<String, Object>> queryTreeList() {
 		Result<Map<String, Object>> result = new Result<>();
 		// 全部权限ids
@@ -270,7 +273,7 @@ public class SysPermissionController {
 	 * 
 	 * @return
 	 */
-	@RequestMapping(value = "/queryListAsync", method = RequestMethod.GET)
+	@GetMapping(value = "/queryListAsync")
 	public Result<List<TreeModel>> queryAsync(@RequestParam(name = "pid", required = false) String parentId) {
 		Result<List<TreeModel>> result = new Result<>();
 		try {
@@ -293,7 +296,7 @@ public class SysPermissionController {
 	 * 
 	 * @return
 	 */
-	@RequestMapping(value = "/queryRolePermission", method = RequestMethod.GET)
+	@GetMapping(value = "/queryRolePermission")
 	public Result<List<String>> queryRolePermission(@RequestParam(name = "roleId", required = true) String roleId) {
 		Result<List<String>> result = new Result<>();
 		try {
@@ -311,7 +314,7 @@ public class SysPermissionController {
 	 * 
 	 * @return
 	 */
-	@RequestMapping(value = "/saveRolePermission", method = RequestMethod.POST)
+	@PostMapping(value = "/saveRolePermission")
 	@RequiresRoles({ "admin" })
 	public Result<String> saveRolePermission(@RequestBody JSONObject json) {
 		long start = System.currentTimeMillis();
@@ -565,7 +568,7 @@ public class SysPermissionController {
 	 * @param sysPermissionDataRule
 	 * @return
 	 */
-	@RequestMapping(value = "/getPermRuleListByPermId", method = RequestMethod.GET)
+	@GetMapping(value = "/getPermRuleListByPermId")
 	public Result<List<SysPermissionDataRule>> getPermRuleListByPermId(SysPermissionDataRule sysPermissionDataRule) {
 		List<SysPermissionDataRule> permRuleList = sysPermissionDataRuleService.getPermRuleListByPermId(sysPermissionDataRule.getPermissionId());
 		Result<List<SysPermissionDataRule>> result = new Result<>();
@@ -580,7 +583,7 @@ public class SysPermissionController {
 	 * @param sysPermissionDataRule
 	 * @return
 	 */
-	@RequestMapping(value = "/addPermissionRule", method = RequestMethod.POST)
+	@PostMapping(value = "/addPermissionRule")
 	public Result<SysPermissionDataRule> addPermissionRule(@RequestBody SysPermissionDataRule sysPermissionDataRule) {
 		Result<SysPermissionDataRule> result = new Result<SysPermissionDataRule>();
 		try {
@@ -613,7 +616,7 @@ public class SysPermissionController {
 	 * @param sysPermissionDataRule
 	 * @return
 	 */
-	@RequestMapping(value = "/deletePermissionRule", method = RequestMethod.DELETE)
+	@DeleteMapping(value = "/deletePermissionRule")
 	public Result<SysPermissionDataRule> deletePermissionRule(@RequestParam(name = "id", required = true) String id) {
 		Result<SysPermissionDataRule> result = new Result<SysPermissionDataRule>();
 		try {
@@ -632,7 +635,7 @@ public class SysPermissionController {
 	 * @param sysPermissionDataRule
 	 * @return
 	 */
-	@RequestMapping(value = "/queryPermissionRule", method = RequestMethod.GET)
+	@GetMapping(value = "/queryPermissionRule")
 	public Result<List<SysPermissionDataRule>> queryPermissionRule(SysPermissionDataRule sysPermissionDataRule) {
 		Result<List<SysPermissionDataRule>> result = new Result<>();
 		try {

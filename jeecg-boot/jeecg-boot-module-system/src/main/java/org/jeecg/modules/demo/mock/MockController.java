@@ -17,7 +17,6 @@ import org.jeecg.common.api.vo.Result;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.extern.slf4j.Slf4j;
@@ -35,7 +34,7 @@ public class MockController {
 	 * @param filename
 	 * @return
 	 */
-	@RequestMapping(value = "/json/{filename}", method = RequestMethod.GET)
+	@GetMapping(value = "/json/{filename}")
 	public String getJsonData(@PathVariable String filename) {
 		String jsonpath = "classpath:org/jeecg/modules/demo/mock/json/"+filename+".json";
 		return readJson(jsonpath);

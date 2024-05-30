@@ -12,8 +12,9 @@ import org.jeecg.modules.system.entity.SysLog;
 import org.jeecg.modules.system.entity.SysRole;
 import org.jeecg.modules.system.service.ISysLogService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -47,7 +48,7 @@ public class SysLogController {
 	 * @param req
 	 * @return
 	 */
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	@GetMapping(value = "/list")
 	public Result<IPage<SysLog>> queryPageList(SysLog syslog,@RequestParam(name="pageNo", defaultValue="1") Integer pageNo,
 									  @RequestParam(name="pageSize", defaultValue="10") Integer pageSize,HttpServletRequest req) {
 		Result<IPage<SysLog>> result = new Result<IPage<SysLog>>();
@@ -77,7 +78,7 @@ public class SysLogController {
 	 * @param id
 	 * @return
 	 */
-	@RequestMapping(value = "/delete", method = RequestMethod.DELETE)
+	@DeleteMapping(value = "/delete")
 	public Result<SysLog> delete(@RequestParam(name="id",required=true) String id) {
 		Result<SysLog> result = new Result<SysLog>();
 		SysLog sysLog = sysLogService.getById(id);
@@ -97,7 +98,7 @@ public class SysLogController {
 	 * @param ids
 	 * @return
 	 */
-	@RequestMapping(value = "/deleteBatch", method = RequestMethod.DELETE)
+	@DeleteMapping(value = "/deleteBatch")
 	public Result<SysRole> deleteBatch(@RequestParam(name="ids",required=true) String ids) {
 		Result<SysRole> result = new Result<SysRole>();
 		if(ids==null || "".equals(ids.trim())) {

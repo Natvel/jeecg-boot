@@ -14,9 +14,12 @@ import org.jeecg.modules.system.entity.SysDictItem;
 import org.jeecg.modules.system.service.ISysDictItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -50,7 +53,7 @@ public class SysDictItemController {
 	 * @param req
 	 * @return
 	 */
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	@GetMapping(value = "/list")
 	public Result<IPage<SysDictItem>> queryPageList(SysDictItem sysDictItem,@RequestParam(name="pageNo", defaultValue="1") Integer pageNo,
 									  @RequestParam(name="pageSize", defaultValue="10") Integer pageSize,HttpServletRequest req) {
 		Result<IPage<SysDictItem>> result = new Result<IPage<SysDictItem>>();
@@ -68,7 +71,7 @@ public class SysDictItemController {
 	 * @param sysDict
 	 * @return
 	 */
-	@RequestMapping(value = "/add", method = RequestMethod.POST)
+	@PostMapping(value = "/add")
 	@CacheEvict(value= CacheConstant.DICT_CACHE, allEntries=true)
 	public Result<SysDictItem> add(@RequestBody SysDictItem sysDictItem) {
 		Result<SysDictItem> result = new Result<SysDictItem>();
@@ -88,7 +91,7 @@ public class SysDictItemController {
 	 * @param sysDictItem
 	 * @return
 	 */
-	@RequestMapping(value = "/edit", method = RequestMethod.PUT)
+	@PutMapping(value = "/edit")
 	@CacheEvict(value=CacheConstant.DICT_CACHE, allEntries=true)
 	public Result<SysDictItem> edit(@RequestBody SysDictItem sysDictItem) {
 		Result<SysDictItem> result = new Result<SysDictItem>();
@@ -111,7 +114,7 @@ public class SysDictItemController {
 	 * @param id
 	 * @return
 	 */
-	@RequestMapping(value = "/delete", method = RequestMethod.DELETE)
+	@DeleteMapping(value = "/delete")
 	@CacheEvict(value=CacheConstant.DICT_CACHE, allEntries=true)
 	public Result<SysDictItem> delete(@RequestParam(name="id",required=true) String id) {
 		Result<SysDictItem> result = new Result<SysDictItem>();
@@ -132,7 +135,7 @@ public class SysDictItemController {
 	 * @param ids
 	 * @return
 	 */
-	@RequestMapping(value = "/deleteBatch", method = RequestMethod.DELETE)
+	@DeleteMapping(value = "/deleteBatch")
 	@CacheEvict(value=CacheConstant.DICT_CACHE, allEntries=true)
 	public Result<SysDictItem> deleteBatch(@RequestParam(name="ids",required=true) String ids) {
 		Result<SysDictItem> result = new Result<SysDictItem>();

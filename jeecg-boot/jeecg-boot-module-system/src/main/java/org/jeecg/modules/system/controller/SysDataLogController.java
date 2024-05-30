@@ -11,8 +11,8 @@ import org.jeecg.common.util.oConvertUtils;
 import org.jeecg.modules.system.entity.SysDataLog;
 import org.jeecg.modules.system.service.ISysDataLogService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,7 +29,7 @@ public class SysDataLogController {
 	@Autowired
 	private ISysDataLogService service;
 	
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	@GetMapping(value = "/list")
 	public Result<IPage<SysDataLog>> queryPageList(SysDataLog dataLog,@RequestParam(name="pageNo", defaultValue="1") Integer pageNo,
 									  @RequestParam(name="pageSize", defaultValue="10") Integer pageSize,HttpServletRequest req) {
 		Result<IPage<SysDataLog>> result = new Result<IPage<SysDataLog>>();
@@ -50,7 +50,7 @@ public class SysDataLogController {
 	 * @param req
 	 * @return
 	 */
-	@RequestMapping(value = "/queryCompareList", method = RequestMethod.GET)
+	@GetMapping(value = "/queryCompareList")
 	public Result<List<SysDataLog>> queryCompareList(HttpServletRequest req) {
 		Result<List<SysDataLog>> result = new Result<>();
 		String dataId1 = req.getParameter("dataId1");
@@ -73,7 +73,7 @@ public class SysDataLogController {
 	 * @param req
 	 * @return
 	 */
-	@RequestMapping(value = "/queryDataVerList", method = RequestMethod.GET)
+	@GetMapping(value = "/queryDataVerList")
 	public Result<List<SysDataLog>> queryDataVerList(HttpServletRequest req) {
 		Result<List<SysDataLog>> result = new Result<>();
 		String dataTable = req.getParameter("dataTable");

@@ -29,7 +29,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -220,7 +219,7 @@ public class SysCategoryController {
    * @param response
    * @return
    */
-  @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
+  @PostMapping(value = "/importExcel")
   public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
       MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
       Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
@@ -255,7 +254,7 @@ public class SysCategoryController {
   /**
      * 加载单个数据 用于回显
    */
-    @RequestMapping(value = "/loadOne", method = RequestMethod.GET)
+    @GetMapping(value = "/loadOne")
  	public Result<SysCategory> loadOne(@RequestParam(name="field") String field,@RequestParam(name="val") String val) {
  		Result<SysCategory> result = new Result<SysCategory>();
  		try {
@@ -284,7 +283,7 @@ public class SysCategoryController {
     /**
           * 加载节点的子数据
      */
-    @RequestMapping(value = "/loadTreeChildren", method = RequestMethod.GET)
+    @GetMapping(value = "/loadTreeChildren")
 	public Result<List<TreeSelectModel>> loadTreeChildren(@RequestParam(name="pid") String pid) {
 		Result<List<TreeSelectModel>> result = new Result<List<TreeSelectModel>>();
 		try {
@@ -302,7 +301,7 @@ public class SysCategoryController {
     /**
          * 加载一级节点/如果是同步 则所有数据
      */
-    @RequestMapping(value = "/loadTreeRoot", method = RequestMethod.GET)
+    @GetMapping(value = "/loadTreeRoot")
    	public Result<List<TreeSelectModel>> loadTreeRoot(@RequestParam(name="async") Boolean async,@RequestParam(name="pcode") String pcode) {
    		Result<List<TreeSelectModel>> result = new Result<List<TreeSelectModel>>();
    		try {

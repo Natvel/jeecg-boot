@@ -30,9 +30,12 @@ import org.jeecgframework.poi.excel.entity.ExportParams;
 import org.jeecgframework.poi.excel.entity.ImportParams;
 import org.jeecgframework.poi.excel.view.JeecgEntityExcelView;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -71,7 +74,7 @@ public class SysAnnouncementController {
 	 * @param req
 	 * @return
 	 */
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	@GetMapping(value = "/list")
 	public Result<IPage<SysAnnouncement>> queryPageList(SysAnnouncement sysAnnouncement,
 									  @RequestParam(name="pageNo", defaultValue="1") Integer pageNo,
 									  @RequestParam(name="pageSize", defaultValue="10") Integer pageSize,
@@ -105,7 +108,7 @@ public class SysAnnouncementController {
 	 * @param sysAnnouncement
 	 * @return
 	 */
-	@RequestMapping(value = "/add", method = RequestMethod.POST)
+	@PostMapping(value = "/add")
 	public Result<SysAnnouncement> add(@RequestBody SysAnnouncement sysAnnouncement) {
 		Result<SysAnnouncement> result = new Result<SysAnnouncement>();
 		try {
@@ -125,7 +128,7 @@ public class SysAnnouncementController {
 	 * @param sysAnnouncement
 	 * @return
 	 */
-	@RequestMapping(value = "/edit", method = RequestMethod.PUT)
+	@PutMapping(value = "/edit")
 	public Result<SysAnnouncement> eidt(@RequestBody SysAnnouncement sysAnnouncement) {
 		Result<SysAnnouncement> result = new Result<SysAnnouncement>();
 		SysAnnouncement sysAnnouncementEntity = sysAnnouncementService.getById(sysAnnouncement.getId());
@@ -147,7 +150,7 @@ public class SysAnnouncementController {
 	 * @param id
 	 * @return
 	 */
-	@RequestMapping(value = "/delete", method = RequestMethod.DELETE)
+	@DeleteMapping(value = "/delete")
 	public Result<SysAnnouncement> delete(@RequestParam(name="id",required=true) String id) {
 		Result<SysAnnouncement> result = new Result<SysAnnouncement>();
 		SysAnnouncement sysAnnouncement = sysAnnouncementService.getById(id);
@@ -169,7 +172,7 @@ public class SysAnnouncementController {
 	 * @param ids
 	 * @return
 	 */
-	@RequestMapping(value = "/deleteBatch", method = RequestMethod.DELETE)
+	@DeleteMapping(value = "/deleteBatch")
 	public Result<SysAnnouncement> deleteBatch(@RequestParam(name="ids",required=true) String ids) {
 		Result<SysAnnouncement> result = new Result<SysAnnouncement>();
 		if(ids==null || "".equals(ids.trim())) {
@@ -191,7 +194,7 @@ public class SysAnnouncementController {
 	 * @param id
 	 * @return
 	 */
-	@RequestMapping(value = "/queryById", method = RequestMethod.GET)
+	@GetMapping(value = "/queryById")
 	public Result<SysAnnouncement> queryById(@RequestParam(name="id",required=true) String id) {
 		Result<SysAnnouncement> result = new Result<SysAnnouncement>();
 		SysAnnouncement sysAnnouncement = sysAnnouncementService.getById(id);
@@ -209,7 +212,7 @@ public class SysAnnouncementController {
 	 * @param id
 	 * @return
 	 */
-	@RequestMapping(value = "/doReleaseData", method = RequestMethod.GET)
+	@GetMapping(value = "/doReleaseData")
 	public Result<SysAnnouncement> doReleaseData(@RequestParam(name="id",required=true) String id, HttpServletRequest request) {
 		Result<SysAnnouncement> result = new Result<SysAnnouncement>();
 		SysAnnouncement sysAnnouncement = sysAnnouncementService.getById(id);
@@ -234,7 +237,7 @@ public class SysAnnouncementController {
 	 * @param id
 	 * @return
 	 */
-	@RequestMapping(value = "/doReovkeData", method = RequestMethod.GET)
+	@GetMapping(value = "/doReovkeData")
 	public Result<SysAnnouncement> doReovkeData(@RequestParam(name="id",required=true) String id, HttpServletRequest request) {
 		Result<SysAnnouncement> result = new Result<SysAnnouncement>();
 		SysAnnouncement sysAnnouncement = sysAnnouncementService.getById(id);
@@ -257,7 +260,7 @@ public class SysAnnouncementController {
 	 * @param id
 	 * @return
 	 */
-	@RequestMapping(value = "/listByUser", method = RequestMethod.GET)
+	@GetMapping(value = "/listByUser")
 	public Result<Map<String,Object>> listByUser() {
 		Result<Map<String,Object>> result = new Result<Map<String,Object>>();
 		LoginUser sysUser = (LoginUser)SecurityUtils.getSubject().getPrincipal();
@@ -326,7 +329,7 @@ public class SysAnnouncementController {
      * @param response
      * @return
      */
-    @RequestMapping(value = "/importExcel", method = RequestMethod.POST)
+    @PostMapping(value = "/importExcel")
     public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
         Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();

@@ -34,10 +34,13 @@ import org.jeecgframework.poi.excel.view.JeecgEntityExcelView;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -70,7 +73,7 @@ public class SysDictController {
 	@Autowired
 	private ISysDictItemService sysDictItemService;
 
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	@GetMapping(value = "/list")
 	public Result<IPage<SysDict>> queryPageList(SysDict sysDict,@RequestParam(name="pageNo", defaultValue="1") Integer pageNo,
 									  @RequestParam(name="pageSize", defaultValue="10") Integer pageSize,HttpServletRequest req) {
 		Result<IPage<SysDict>> result = new Result<IPage<SysDict>>();
@@ -95,7 +98,7 @@ public class SysDictController {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	@RequestMapping(value = "/treeList", method = RequestMethod.GET)
+	@GetMapping(value = "/treeList")
 	public Result<List<SysDictTree>> treeList(SysDict sysDict,@RequestParam(name="pageNo", defaultValue="1") Integer pageNo,
 									  @RequestParam(name="pageSize", defaultValue="10") Integer pageSize,HttpServletRequest req) {
 		Result<List<SysDictTree>> result = new Result<>();
@@ -122,7 +125,7 @@ public class SysDictController {
 	 * @param dictCode 表名,文本字段,code字段  | 举例：sys_user,realname,id
 	 * @return
 	 */
-	@RequestMapping(value = "/getDictItems/{dictCode}", method = RequestMethod.GET)
+	@GetMapping(value = "/getDictItems/{dictCode}")
 	public Result<List<DictModel>> getDictItems(@PathVariable String dictCode) {
 		log.info(" dictCode : "+ dictCode);
 		Result<List<DictModel>> result = new Result<List<DictModel>>();
@@ -172,7 +175,7 @@ public class SysDictController {
 	 * @param dictCode
 	 * @return
 	 */
-	@RequestMapping(value = "/getDictText/{dictCode}/{key}", method = RequestMethod.GET)
+	@GetMapping(value = "/getDictText/{dictCode}/{key}")
 	public Result<String> getDictItems(@PathVariable("dictCode") String dictCode, @PathVariable("key") String key) {
 		log.info(" dictCode : "+ dictCode);
 		Result<String> result = new Result<String>();
@@ -194,7 +197,7 @@ public class SysDictController {
 	 * @param sysDict
 	 * @return
 	 */
-	@RequestMapping(value = "/add", method = RequestMethod.POST)
+	@PostMapping(value = "/add")
 	public Result<SysDict> add(@RequestBody SysDict sysDict) {
 		Result<SysDict> result = new Result<SysDict>();
 		try {
@@ -214,7 +217,7 @@ public class SysDictController {
 	 * @param sysDict
 	 * @return
 	 */
-	@RequestMapping(value = "/edit", method = RequestMethod.PUT)
+	@PutMapping(value = "/edit")
 	public Result<SysDict> edit(@RequestBody SysDict sysDict) {
 		Result<SysDict> result = new Result<SysDict>();
 		SysDict sysdict = sysDictService.getById(sysDict.getId());
@@ -236,7 +239,7 @@ public class SysDictController {
 	 * @param id
 	 * @return
 	 */
-	@RequestMapping(value = "/delete", method = RequestMethod.DELETE)
+	@DeleteMapping(value = "/delete")
 	@CacheEvict(value=CacheConstant.DICT_CACHE, allEntries=true)
 	public Result<SysDict> delete(@RequestParam(name="id",required=true) String id) {
 		Result<SysDict> result = new Result<SysDict>();
@@ -254,7 +257,7 @@ public class SysDictController {
 	 * @param ids
 	 * @return
 	 */
-	@RequestMapping(value = "/deleteBatch", method = RequestMethod.DELETE)
+	@DeleteMapping(value = "/deleteBatch")
 	@CacheEvict(value= CacheConstant.DICT_CACHE, allEntries=true)
 	public Result<SysDict> deleteBatch(@RequestParam(name="ids",required=true) String ids) {
 		Result<SysDict> result = new Result<SysDict>();
@@ -310,7 +313,7 @@ public class SysDictController {
 	 * @param
 	 * @return
 	 */
-	@RequestMapping(value = "/importExcel", method = RequestMethod.POST)
+	@PostMapping(value = "/importExcel")
 	public Result<?> importExcel(HttpServletRequest request, HttpServletResponse response) {
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 		Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
@@ -350,7 +353,7 @@ public class SysDictController {
 	 * @param dictCode
 	 * @return
 	 */
-	@RequestMapping(value = "/loadDict/{dictCode}", method = RequestMethod.GET)
+	@GetMapping(value = "/loadDict/{dictCode}")
 	public Result<List<DictModel>> loadDict(@PathVariable String dictCode,@RequestParam(name="keyword") String keyword) {
 		log.info(" 加载字典表数据,加载关键字: "+ keyword);
 		Result<List<DictModel>> result = new Result<List<DictModel>>();
@@ -381,7 +384,7 @@ public class SysDictController {
 	/**
 	 * 根据字典code加载字典text 返回
 	 */
-	@RequestMapping(value = "/loadDictItem/{dictCode}", method = RequestMethod.GET)
+	@GetMapping(value = "/loadDictItem/{dictCode}")
 	public Result<String> loadDictItem(@PathVariable String dictCode,@RequestParam(name="key") String key) {
 		Result<String> result = new Result<String>();
 		try {
@@ -410,7 +413,7 @@ public class SysDictController {
 	/**
 	 * 根据表名——显示字段-存储字段 pid 加载树形数据
 	 */
-	@RequestMapping(value = "/loadTreeData", method = RequestMethod.GET)
+	@GetMapping(value = "/loadTreeData")
 	public Result<List<TreeSelectModel>> loadDict(@RequestParam(name="pid") String pid,@RequestParam(name="pidField") String pidField,
 			@RequestParam(name="tableName") String tbname,
 			@RequestParam(name="text") String text,
