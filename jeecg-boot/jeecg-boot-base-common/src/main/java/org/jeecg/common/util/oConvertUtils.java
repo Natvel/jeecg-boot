@@ -8,6 +8,7 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.security.SecureRandom;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -545,7 +546,7 @@ public class oConvertUtils {
 	public static String randomGen(int place) {
 		String base = "qwertyuioplkjhgfdsazxcvbnmQAZWSXEDCRFVTGBYHNUJMIKLOP0123456789";
 		StringBuffer sb = new StringBuffer();
-		Random rd = new Random();
+		Random rd = new SecureRandom();
 		for(int i=0;i<place;i++) {
 			sb.append(base.charAt(rd.nextInt(base.length())));
 		}
