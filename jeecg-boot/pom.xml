@@ -48,7 +48,8 @@
         <commons.version>2.6</commons.version>
         <aliyun-java-sdk-core.version>3.2.3</aliyun-java-sdk-core.version>
 		<aliyun-java-sdk-dysmsapi.version>1.0.0</aliyun-java-sdk-dysmsapi.version>
-    </properties>
+		<versions.java-security-toolkit>1.2.0</versions.java-security-toolkit>
+	</properties>
     
 	<dependencies>
 		<!--集成springmvc框架并实现自动配置 -->
@@ -255,6 +256,11 @@
 	    		<artifactId>jeecg-boot-base-common</artifactId>
 	    		<version>${jeecgboot.common.version}</version>
 	    	</dependency>
+			<dependency>
+				<groupId>io.github.pixee</groupId>
+				<artifactId>java-security-toolkit</artifactId>
+				<version>${versions.java-security-toolkit}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 	<build>
