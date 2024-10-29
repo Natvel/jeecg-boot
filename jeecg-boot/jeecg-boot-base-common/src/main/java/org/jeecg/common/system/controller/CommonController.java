@@ -1,5 +1,6 @@
 package org.jeecg.common.system.controller;
 
+import io.github.pixee.security.Filenames;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -66,7 +67,7 @@ public class CommonController {
 			}
 			MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 			MultipartFile mf = multipartRequest.getFile("file");// 获取上传文件对象
-			String orgName = mf.getOriginalFilename();// 获取文件名
+			String orgName = Filenames.toSimpleFileName(mf.getOriginalFilename());// 获取文件名
 			fileName = orgName.substring(0, orgName.lastIndexOf(".")) + "_" + System.currentTimeMillis() + orgName.substring(orgName.indexOf("."));
 			String savePath = file.getPath() + File.separator + fileName;
 			File savefile = new File(savePath);
